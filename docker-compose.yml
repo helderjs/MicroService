@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+#  elasticsearch:
+#    container_name: elasticsearch
+#    build:
+#      context: ./infra/elasticsearch
+#    environment:
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    volumes:
+#      - esdata:/usr/share/elasticsearch/data
+#  kibana:
+#    container_name: kibana
+#    build:
+#      context: ./infra/kibana
+#    ports:
+#      - 5601:5601
+#    depends_on:
+#      - elasticsearch
+  consul:
+    container_name: consul
+    build:
+      context: ./infra/consul
+    ports:
+      - 8500:8500
+  gateway:
+    container_name: gateway
+    build:
+      context: ./infra/traefik
+    command: --api --docker
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - ./infra/traefik/traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - consul
+volumes:
+  esdata:
+    driver: local

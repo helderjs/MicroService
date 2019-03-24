@@ -1,0 +1,70 @@
+################################################################
+# Global configuration
+################################################################
+
+# Enable debug mode
+debug = true
+
+# Log level
+logLevel = "DEBUG"
+
+################################################################
+# Entrypoints configuration
+################################################################
+
+# Entrypoints definition
+[entrypoints]
+    [entrypoints.web]
+    address = ":80"
+
+################################################################
+# Traefik logs configuration
+################################################################
+
+# Traefik logs
+[traefikLog]
+    format = "json"
+
+################################################################
+# Access logs configuration
+################################################################
+
+[accessLog]
+    format = "json"
+
+################################################################
+# API and dashboard configuration
+################################################################
+
+# Enable API and dashboard
+[api]
+    entryPoint = "traefik"
+    dashboard = true
+
+################################################################
+# Ping configuration
+################################################################
+
+# Enable ping
+[ping]
+    entryPoint = "traefik"
+
+################################################################
+# Docker configuration backend
+################################################################
+
+# Enable Docker configuration backend
+[docker]
+    endpoint = "unix:///var/run/docker.sock"
+    domain = "docker.local"
+    exposedByDefault = true
+
+################################################################
+# Consul configuration
+################################################################
+
+# Enable Consul KV Provider.
+[consul]
+    endpoint = "consul:8500"
+    watch = true
+    prefix = "traefik"

@@ -1,0 +1,27 @@
+{
+  consul: "localhost:8500",
+  jobs: [
+    {
+      name: "php-fpm",
+      port: 9000,
+      interfaces: ["eth0"],
+      exec: "php-fpm",
+      health: {
+        exec: "curl -fsSo /dev/null http://nginx/v1/app/health",
+        interval: 10,
+        ttl: 25,
+        timeout: "5s",
+      },
+      tags: [
+        "app",
+        "php-fpm",
+      ],
+    },
+    {
+      name: "consul-agent",
+      interfaces: ["eth0"],
+      exec: "consul agent -data-dir=/data -join=consul",
+      restarts: "unlimited",
+    },
+  ],
+}

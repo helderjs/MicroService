@@ -1,0 +1,27 @@
+{
+  consul: "localhost:8500",
+  jobs: [
+    {
+      name: "nginx",
+      port: 80,
+      interfaces: ["eth0"],
+      exec: ["nginx", "-g", "daemon off;"],
+      health: {
+        exec: "curl -fsSo /dev/null http://localhost/nginx-health",
+        interval: 10,
+        ttl: 25,
+        timeout: "5s",
+      },
+      tags: [
+        "app",
+        "nginx",
+      ],
+    },
+    {
+      name: "consul-agent",
+      interfaces: ["eth0"],
+      exec: "consul agent -data-dir=/data -join=consul",
+      restarts: "unlimited",
+    },
+  ],
+}

@@ -14,7 +14,7 @@ logLevel = "DEBUG"
 
 # Entrypoints definition
 [entrypoints]
-    [entrypoints.web]
+    [entrypoints.http]
     address = ":80"
 
 ################################################################
@@ -50,21 +50,12 @@ logLevel = "DEBUG"
     entryPoint = "traefik"
 
 ################################################################
-# Docker configuration backend
-################################################################
-
-# Enable Docker configuration backend
-[docker]
-    endpoint = "unix:///var/run/docker.sock"
-    domain = "docker.local"
-    exposedByDefault = true
-
-################################################################
 # Consul configuration
 ################################################################
 
 # Enable Consul KV Provider.
-[consul]
+[consulCatalog]
     endpoint = "consul:8500"
     watch = true
     prefix = "traefik"
+    domain = "consul.local"
